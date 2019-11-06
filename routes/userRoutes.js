@@ -1,6 +1,6 @@
 const userAction = require("../controllers/userController");
 
-module.exports = function(app)
+module.exports = function(app, upload)
 {
     app.route("/users")
     .get(userAction.getAllUsers)

@@ -7,7 +7,6 @@ const member = function(data)
     this.Firstname = data.Firstname;
     this.Email = data.Email;
     this.Phone = data.Phone;
-    this.Username = data.Username;
     this.Password = data.Password;
     this.Role = 0;
     this.Home_street = data.Home_street;

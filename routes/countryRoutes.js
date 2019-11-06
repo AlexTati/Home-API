@@ -1,6 +1,6 @@
 const countryAction = require("../controllers/countryController");
 
-module.exports = function(app)
+module.exports = function(app, upload)
 {
     app.route("/countries")
     .get(countryAction.getAllCountry);

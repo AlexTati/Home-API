@@ -1,14 +1,14 @@
 const memberAction = require("../controllers/memberController");
 
-module.exports = function(app)
+module.exports = function(app, upload)
 {
     app.route("/members")
     .get(memberAction.getAllMembers)
-    .post(memberAction.insertMember);
+    .post(upload.none(), memberAction.insertMember);
 
     app.route("/members/:id")
     .get(memberAction.getMemberById)
-    .put(memberAction.updateMember)
-    .delete(memberAction.deleteMember);
+    .put(upload.none(), memberAction.updateMember)
+    .delete(upload.none(), memberAction.deleteMember);
 }
 

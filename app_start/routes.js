@@ -5,7 +5,7 @@ const countryRoutes = require('../routes/countryRoutes');
 const authRoutes = require('../routes/authRoutes');
 const testRoutes = require('../routes/testRoutes');
 
-module.exports = function(app)
+module.exports = function(app, upload)
 {
     app.use(function(req, res, next) {
         res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
@@ -13,12 +13,12 @@ module.exports = function(app)
         next();
     });
 
-    userRoutes(app);
-    memberRoutes(app);
-    houseRoutes(app);
-    countryRoutes(app);
-    authRoutes(app);
-    testRoutes(app);
+    userRoutes(app, upload);
+    memberRoutes(app, upload);
+    houseRoutes(app, upload);
+    countryRoutes(app, upload);
+    authRoutes(app, upload);
+    testRoutes(app, upload);
 
     app.use(function(req, res){
         res.send(404);

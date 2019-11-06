@@ -1,6 +1,6 @@
 const houseAction = require("../controllers/houseController");
 
-module.exports = function(app)
+module.exports = function(app, upload)
 {
     app.route("/houses")
     .get(houseAction.getAllHouses)

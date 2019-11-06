@@ -1,10 +1,20 @@
 const express = require('express');
-const config = require("./config");
+var multer  = require('multer');
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, '/var/www/html/assets/')
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now() + '.png')
+    }
+});
+var upload = multer({ storage: storage });
+
+
 const app = express();
 
 const registerRoutes = require('./app_start/routes');
 
-config(app);
-registerRoutes(app);
+registerRoutes(app, upload);
 
 app.listen(3000);
