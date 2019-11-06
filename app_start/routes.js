@@ -3,6 +3,7 @@ const memberRoutes = require('../routes/memberRoutes');
 const houseRoutes = require('../routes/houseRoutes');
 const countryRoutes = require('../routes/countryRoutes');
 const authRoutes = require('../routes/authRoutes');
+const testRoutes = require('../routes/testRoutes');
 
 module.exports = function(app)
 {
@@ -17,5 +18,10 @@ module.exports = function(app)
     houseRoutes(app);
     countryRoutes(app);
     authRoutes(app);
+    testRoutes(app);
+
+    app.use(function(req, res){
+        res.send(404);
+    });
 
 }

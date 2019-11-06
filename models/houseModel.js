@@ -1,5 +1,4 @@
-const house = function(data)
-{
+const house = function (data) {
     this.Id = data.Id;
     this.Title = data.Title;
     this.Short_description = data.Short_description;
@@ -16,8 +15,12 @@ const house = function(data)
     this.City_id = data.City_id;
     this.Membre_id = data.Membre_id;
 
-    this.isValid = function(){
-        return true
+    this.isValid = function () {
+        if (this.Title && this.Short_description && this.Nb_guest && this.Insurance_mandatory
+            && this.Street && this.Num && this.Box && this.City_id)
+            return true
+        else
+            return false
     }
 }
 
