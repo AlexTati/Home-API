@@ -1,8 +1,7 @@
-const memberAction = require("../controllers/memberController");
+const authAction = require("../controllers/authController");
 
-module.exports = function(app)
-{
+module.exports = function (app) {
     app.route("/auth/login")
-    .post(memberAction.login);
+        .post(authAction.login);
 }
 

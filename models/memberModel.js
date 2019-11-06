@@ -20,8 +20,11 @@ const member = function(data)
     this.Facturation_city_id = data.Facturation_city_id;
 
     this.isValid = function(){
-        return true
-
+        if (this.Lastname && this.Firstname && this.Email && this.Phone && this.Password
+            && this.Home_street && this.Home_num && this.Home_box && this.Home_city_id )
+            return true
+        else
+            return false
     }
 
 };

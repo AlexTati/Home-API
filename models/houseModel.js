@@ -17,7 +17,7 @@ const house = function(data)
     this.Membre_id = data.Membre_id;
 
     this.isValid = function(){
-        return true;
+        return true
     }
 }
 

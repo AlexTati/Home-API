@@ -64,12 +64,13 @@ const insertMember = (req,res) => {
 
         if(new_member.isValid())
         {
-            memberRepo.insertMember(new_member).then(([rows, meta])=>
-            {
-
-                new_member.id = rows.insertId;
-                res.json({"status":"success", "data": { "user" : new_member}});
-            }).catch(error => res.json({"status":"error", "message":error.message}))
+            memberRepo.insertMember(new_member)
+                .then(([rows, meta])=>
+                    {
+                        new_member.id = rows.insertId;
+                        res.json({"status":"success", "data": { "user" : new_member}});
+                    })
+                .catch(error => res.json({"status":"error", "message":error.message}))
         } else
             res.json({"status":"fail", "message":"fields cannot be empty"});
     
@@ -94,24 +95,6 @@ const deleteMember = (req,res) => {
 
 }
 
-const login = (req,res) => {
-    let email = req.body.email;
-    let password = req.body.password;
-
-    console.log(email)
-    console.log(password)
-
-    result = memberRepo.login(email, password).then(([rows, meta]) => {
-        if(rows.length!=0){
-            let singleMember = new member(rows[0]);
-            res.json({"status": "success", "data" : { "member": singleMember}});
-        }else{
-            res.json({"status": "fail", "message" : "invalid email / password"});
-        }
-    }).catch(err => res.json({"status":"error", "message": err.message}))
-
-
-}
 
 module.exports = {
     //GET
@@ -122,5 +105,4 @@ module.exports = {
     insertMember: insertMember,
     deleteMember: deleteMember,
 
-    login: login
 }
