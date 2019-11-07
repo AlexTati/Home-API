@@ -14,10 +14,11 @@ const house = function (data) {
     this.Box = data.Box;
     this.City_id = data.City_id;
     this.Membre_id = data.Membre_id;
+    this.House_type_id = data.House_type_id;
 
     this.isValid = function () {
         if (this.Title && this.Short_description && this.Nb_guest && this.Insurance_mandatory
-            && this.Street && this.Num && this.Box && this.City_id)
+            && this.Street && this.Num && this.Box && this.City_id && data.House_type_id)
             return true
         else
             return false
