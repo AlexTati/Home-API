@@ -8,7 +8,7 @@ const getAllHouses = (req,res) =>
         houses = [];
         rows.forEach(item => houses.push(new house(item)));
 
-        res.json({"status":"success", "houses": houses});
+        res.json({"status":"success", "data": houses});
     })
     .catch(err => res.json({"status":"error", "message": err.message}));
 
@@ -95,12 +95,30 @@ const deleteHouse = (req,res) =>
 
 }
 
-module.exports = {
+const getHouseForMember = (req,res) =>
+{
+    let memberId = req.params.id;
+
+    houseRepo.getHouseForMember(memberId).then(([rows, meta]) =>
+    {
+        houses = [];
+        rows.forEach(item => houses.push(new house(item)));
+
+        res.json({"status":"success", "data": houses});
+    })
+        .catch(err => res.json({"status":"error", "message": err.message}));
+
+
+}
+
+    module.exports = {
     //GET
     getAllHouses: getAllHouses,
     getHouseById: getHouseById,
     //CUD
     updateHouse: updateHouse,
     insertHouse: insertHouse,
-    deleteHouse: deleteHouse
+    deleteHouse: deleteHouse,
+
+    getHouseForMember: getHouseForMember
 }

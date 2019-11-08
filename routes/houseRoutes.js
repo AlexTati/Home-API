@@ -11,5 +11,8 @@ module.exports = function(app, upload)
     .get(houseAction.getHouseById)
     .put(houseAction.updateHouse)
     .delete(houseAction.deleteHouse);
+
+    app.route('/members/:id/houses')
+        .get(houseAction.getHouseForMember)
 }
 

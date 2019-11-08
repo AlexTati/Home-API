@@ -16,6 +16,13 @@ const house = function (data) {
     this.Membre_id = data.Membre_id;
     this.House_type_id = data.House_type_id;
 
+    this.City_Name = data.City_Name;
+    this.City_Zip = data.City_Zip;
+    this.Country_id = data.Country_id;
+    this.Country_Name = data.Country_Name;
+    this.House_type_name = data.House_type_name
+    this.Note = data.Note;
+
     this.isValid = function () {
         if (this.Title && this.Short_description && this.Nb_guest && this.Insurance_mandatory
             && this.Street && this.Num && this.Box && this.City_id && data.House_type_id)

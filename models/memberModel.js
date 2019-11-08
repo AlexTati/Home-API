@@ -2,7 +2,7 @@
 
 const member = function(data)
 {
-    this.id = data.id;
+    this.Id = data.Id;
     this.Lastname = data.Lastname;
     this.Firstname = data.Firstname;
     this.Email = data.Email;
@@ -17,6 +17,11 @@ const member = function(data)
     this.Facturation_num = data.Facturation_num;
     this.Facturation_box = data.Facturation_box;
     this.Facturation_city_id = data.Facturation_city_id;
+    this.Home_City_Name = data.Home_City_Name;
+    this.Home_City_Zip 	= data.Home_City_Zip;
+    this.Home_Country_id = data.Home_Country_id;
+    this.Home_Country_Name = data.Home_Country_Name;
+
 
     this.isValid = function(){
         if (this.Lastname && this.Firstname && this.Email && this.Phone && this.Password

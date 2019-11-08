@@ -29,8 +29,7 @@ const updateMember = function(member)
 
 const login = function (email, password)
 {
-    console.log("login attempt" + email + ":" + password)
-    return db.stmt('SELECT * from MEMBRE where Email=? AND Password=?', [email, password])
+    return db.stmt('SELECT * from MEMBRE_FULL_VIEW where Email=? AND Password=?', [email, password])
 }
 
 module.exports = {

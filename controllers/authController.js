@@ -11,7 +11,7 @@ const login = (req,res) => {
     result = memberRepo.login(email, password).then(([rows, meta]) => {
         if(rows.length!=0){
             let singleMember = new member(rows[0]);
-            res.json({"status": "success", "data" : { "member": singleMember}});
+            res.json({"status": "success", "data" : singleMember});
         }else{
             res.json({"status": "fail", "message" : "invalid email / password"});
         }

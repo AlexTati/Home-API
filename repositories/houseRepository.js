@@ -4,7 +4,7 @@ const db = require("../dal/database");
 
 const getAllHouses = function()
 {
-    return db.query("select * from HOUSE");
+    return db.query("select * from HOUSE_FULL_VIEW");
 }
 
 const getHouseById = function(id)
@@ -28,10 +28,15 @@ const updateHouse = function(house)
 
 }
 
+const getHouseForMember = function (memberId){
+    return db.stmt("select * from HOUSE_FULL_VIEW where Membre_id = ? ", [memberId]);
+}
+
 module.exports = {
     getAllHouses: getAllHouses,
     getHouseById: getHouseById,
     deleteHouse: deleteHouse,
     insertHouse: insertHouse,
-    updateHouse:updateHouse,
+    updateHouse: updateHouse,
+    getHouseForMember: getHouseForMember,
 }
