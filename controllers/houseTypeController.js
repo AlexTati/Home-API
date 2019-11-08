@@ -6,7 +6,6 @@ const getAll = (req,res) => {
     repo.getAll().then(([rows, meta]) =>
     {
         types = [];
-        console.log(rows)
         rows.forEach(item => types.push(new type(item)));
 
         res.json(types);

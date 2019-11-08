@@ -2,6 +2,9 @@ const memberRepo = require("../repositories/memberRepository");
 const member = require("../models/memberModel");
 
 const login = (req,res) => {
+
+    console.log(req.body)
+
     let email = req.body.email;
     let password = req.body.password;
 
