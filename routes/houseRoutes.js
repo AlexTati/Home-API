@@ -14,5 +14,9 @@ module.exports = function(app, upload)
 
     app.route('/members/:id/houses')
         .get(houseAction.getHouseForMember)
+
+    app.route("/houses/:id/detailed")
+        .get(houseAction.getHouseDetailsById)
+
 }
 

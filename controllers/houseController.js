@@ -1,8 +1,9 @@
 const houseRepo = require("../repositories/houseRepository");
+const optionRepo = require("../repositories/optionRepository");
 const house = require("../models/houseModel");
+const option = require("../models/optionModel");
 
-const getAllHouses = (req,res) => 
-{
+const getAllHouses = (req,res) => {
     houseRepo.getAllHouses().then(([rows, meta]) => 
     {
         houses = [];
@@ -22,17 +23,41 @@ const getHouseById = (req,res) => {
         res.json({"error":"House Id Must Be Numeric", "house": null})
     }else{
         houseRepo.getHouseById(id).then(([rows, meta]) => {
-             if(rows.length!=0)
-             {
-                 let singleHouse = new house(rows[0]);
-                 res.json({"error":null, "house": singleHouse});
-             }  else {
+            if(rows.length!=0)
+            {
+                let singleHouse = new house(rows[0]);
+                res.json({"status": "success", "data": singleHouse});
+
+            }  else {
                 res.json({"error":"specified house do not exists! ", "house": null});
-             } 
-        }).catch(error =>  res.json({"error":"Something went wrong!", "house": null}));
+            }
+        }).catch(error =>  res.json({"error":error.stack, "house": null}));
     }
-   
+
 }
+
+const getHouseDetailsById = (req,res) => {
+    let id = req.params.id;
+
+    if(isNaN(id))
+    {
+        res.json({"error":"House Id Must Be Numeric", "house": null})
+    }else{
+        houseRepo.getFullHouseById(id).then(([rows, meta]) => {
+            if(rows.length!=0)
+            {
+                let singleHouse = new house(rows[0][0]);
+                res.json({"status": "success", "data": singleHouse});
+
+            }  else {
+                res.json({"error":"specified house do not exists! ", "house": null});
+            }
+        }).catch(error =>  res.json({"error":error.stack, "house": null}));
+    }
+
+}
+
+
 
 const updateHouse = (req,res) => {
     let id = req.params.id;
@@ -75,8 +100,7 @@ const insertHouse = (req,res) => {
     
 }
 
-const deleteHouse = (req,res) => 
-{
+const deleteHouse = (req,res) => {
     let id = req.params.id;
 
     if(isNaN(id))
@@ -95,8 +119,7 @@ const deleteHouse = (req,res) =>
 
 }
 
-const getHouseForMember = (req,res) =>
-{
+const getHouseForMember = (req,res) => {
     let memberId = req.params.id;
 
     houseRepo.getHouseForMember(memberId).then(([rows, meta]) =>
@@ -111,7 +134,7 @@ const getHouseForMember = (req,res) =>
 
 }
 
-    module.exports = {
+module.exports = {
     //GET
     getAllHouses: getAllHouses,
     getHouseById: getHouseById,
@@ -120,5 +143,6 @@ const getHouseForMember = (req,res) =>
     insertHouse: insertHouse,
     deleteHouse: deleteHouse,
 
-    getHouseForMember: getHouseForMember
+    getHouseForMember: getHouseForMember,
+    getHouseDetailsById: getHouseDetailsById,
 }

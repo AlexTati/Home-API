@@ -12,6 +12,10 @@ const getHouseById = function(id)
     return db.stmt("select * from HOUSE where Id=?", [id]);
 }
 
+const getFullHouseById = function (id) {
+    return db.stmt("CALL GetHouseDetails(?)", [id])
+}
+
 const deleteHouse = function(id){
     return db.stmt("delete from HOUSE where Id=?", [id]);
 }
@@ -39,4 +43,5 @@ module.exports = {
     insertHouse: insertHouse,
     updateHouse: updateHouse,
     getHouseForMember: getHouseForMember,
+    getFullHouseById:  getFullHouseById,
 }
