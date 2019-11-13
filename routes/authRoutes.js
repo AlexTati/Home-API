@@ -5,5 +5,8 @@ module.exports = function (app, upload) {
     app.route("/auth/login")
         .post(upload.none(), authAction.login);
 
-}
+    app.route('/oauth/login')
+        .post(upload.none(), authAction.loginOauth)
+
+};
 

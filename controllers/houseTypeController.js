@@ -7,12 +7,9 @@ const getAll = (req,res) => {
     {
         types = [];
         rows.forEach(item => types.push(new type(item)));
-
         res.json(types);
     })
-        .catch(err => res.json({"status": "error", "message": err.message}));
-
-
+        .catch(err => res.status(400).send(err.message));
 }
 
 module.exports = {

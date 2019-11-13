@@ -1,16 +1,15 @@
 const memberRepo = require("../repositories/memberRepository");
 const member = require("../models/memberModel");
 
-const getAllMembers = (req,res) => 
-{
+const getAllMembers = (req,res) => {
     memberRepo.getAllMembers().then(([rows, meta]) => 
     {
         members = [];
         rows.forEach(item => members.push(new member(item)));
 
-        res.json({"status":"success", "members": members});
+        res.json(members);
     })
-    .catch(err => res.json({"status":"error", "message": err.message}));
+        .catch(err => res.status(400).send(err.message));
 
 };
 
@@ -19,17 +18,17 @@ const getMemberById = (req,res) => {
 
     if(isNaN(id))
     {
-        res.json({"error":"Member Id Must Be Numeric", "member": null})
+        res.status(400).send('Member Id Must Be Numeric');
     }else{
         memberRepo.getMemberById(id).then(([rows, meta]) => {
              if(rows.length!=0)
              {
                  let singleMember = new member(rows[0]);
-                 res.json({"error":null, "member": singleMember});
+                 res.json(singleMember);
              }  else {
-                res.json({"error":"specified member do not exists! ", "member": null});
-             } 
-        }).catch(error =>  res.json({"error":"Something went wrong!", "member": null}));
+                 res.status(400).send('Member not found');
+             }
+        }).catch(err => res.status(400).send(err.message));
     }
    
 }
@@ -38,7 +37,7 @@ const updateMember = (req,res) => {
     let id = req.params.id;
     if(isNaN(id))
     {
-        res.json({"error":"Member Id must be Numeric", "message":"Bastard Error!"});
+        res.status(400).send('Member Id Must Be Numeric');
     }
     else {
         req.body.id = id;
@@ -49,18 +48,20 @@ const updateMember = (req,res) => {
             memberRepo.updateMember(new_member).then(([rows, meta])=>
             {
                 if(rows.affectedRows == 1 )
-                    res.json({"error":null, "message":"member successfully updated!"});
+                    res.json(new_member);
                 else{
-                    res.json({"error":"Update Failure", "message":"Nothing has been updated!"});
+                    res.status(400).send('update failed');
                 }
-            }).catch(error => res.json({"error":"Insert Error", "message":"Member not inserted"}))
+            }).catch(err => res.status(400).send(err.message));
         } else
-            res.json({"error":"Validation Error", "message":"fields cannot be empty"});
+            res.status(400).send('invalid data');
     }
 }
     
 const insertMember = (req,res) => {
         let new_member = new member(req.body);
+
+    console.log(new_member);
 
         if(new_member.isValid())
         {
@@ -68,12 +69,13 @@ const insertMember = (req,res) => {
                 .then(([rows, meta])=>
                     {
                         new_member.id = rows.insertId;
-                        res.json({"status":"success", "data": { "user" : new_member}});
+                        res.json(new_member);
                     })
-                .catch(error => res.json({"status":"error", "message":error.message}))
+                .catch(err => res.status(400).send(err.message));
         } else
-            res.json({"status":"fail", "message":"fields cannot be empty"});
-    
+            res.status(400).send('invalid data');
+
+
 }
 
 const deleteMember = (req,res) => {
@@ -81,15 +83,16 @@ const deleteMember = (req,res) => {
 
     if(isNaN(id))
     {
-        res.json({"error":"Member Id Must Be Numeric", "member": null})
+        res.status(400).send('Member Id Must Be Numeric');
+
     }else{
         memberRepo.deleteMember(id).then(([rows, meta]) =>
         {
             if(rows.affectedRows == 1 )
-                res.json({"error": null, "message": "Suppression effectuée avec succès!"});
+                res.json('success');
             else
-                res.json({"error": "Echec de la suppression", "message": "Aucune suppression effectuée!"});
-        }).catch(error =>  res.json({"error": "Something went wrong!", "message": error}));
+                res.status(400).send('suppression failed');
+        }).catch(err => res.status(400).send(err.message));
         
     }
 

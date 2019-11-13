@@ -7,10 +7,9 @@ const getAll = (req,res) => {
     {
         options = [];
         rows.forEach(item => options.push(new option(item)));
-
         res.json(options);
     })
-        .catch(err => res.json({"status": "error", "message": err.message}));
+        .catch(err => res.status(400).send(err.message));
 }
 
 

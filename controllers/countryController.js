@@ -11,7 +11,7 @@ const getAllCountry = (req,res) =>
 
         res.json(countries);
     })
-    .catch(err => res.json({"error":null, "users": null}));
+        .catch(err => res.status(400).send(err.message));
 
 };
 
@@ -24,6 +24,7 @@ const getCitiesForCountry = (req, res) => {
         rows.forEach(item=> cities.push(new city(item)));
         res.json(cities);
     })
+        .catch(err => res.status(400).send(err.message));
 }
 
 

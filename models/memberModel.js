@@ -2,6 +2,7 @@
 
 const member = function(data)
 {
+
     this.Id = data.Id;
     this.Lastname = data.Lastname;
     this.Firstname = data.Firstname;
@@ -20,11 +21,12 @@ const member = function(data)
     this.Home_City_Zip 	= data.Home_City_Zip;
     this.Home_Country_id = data.Home_Country_id;
     this.Home_Country_Name = data.Home_Country_Name;
-
+    this.Account_type = data.Account_type;
 
     this.isValid = function(){
-        if (this.Lastname && this.Firstname && this.Email && this.Phone && this.Password
-            && this.Home_street && this.Home_num && this.Home_box && this.Home_city_id )
+        if (this.Lastname !== undefined && this.Firstname !== undefined && this.Email !== undefined
+            && this.Phone !== undefined && this.Password !== undefined && this.Home_street !== undefined
+            && this.Home_num !== undefined && this.Home_box !== undefined && this.Home_city_id !== undefined)
             return true
         else
             return false
