@@ -7,6 +7,7 @@ const testRoutes = require('../routes/testRoutes');
 const houseTypesRoutes = require ('../routes/typesRoutes');
 const optionRoutes = require ('../routes/optionRoutes.js');
 const availibilityRoutes = require ('../routes/availibilityRoutes.js');
+const commentRoute = require ('../routes/commentRoutes')
 
 module.exports = function(app, upload)
 {
@@ -23,6 +24,8 @@ module.exports = function(app, upload)
     authRoutes(app, upload);
     houseTypesRoutes(app, upload);
     houseTypesRoutes(app, upload);
+    houseTypesRoutes(app, upload);
+    commentRoute(app, upload);
     optionRoutes(app, upload);
     availibilityRoutes(app, upload);
 

@@ -55,18 +55,17 @@ const search = function (house){
     }
 
     if (house.availabilities.length){
-        q += (' AND Start_date < ' + house.availabilities[0].Start_date);
-        q += (' AND End_date < ' + house.availabilities[0].End_date);
+        q += (' AND Start_date < \'' + house.availabilities[0].Start_date.slice(0, 19).replace('T', ' ') + '\'');
+        q += (' AND End_date > \'' + house.availabilities[0].End_date.slice(0, 19).replace('T', ' ')+ '\'');
     }
 
     if (house.options !== undefined && house.options.length){
         house.options.forEach( item => q += ' AND EXISTS ( SELECT * from HOUSE_OPTIONS o where o.House_id = s.Id AND o.Option_id = ' + item.Id +  ' )')
     }
 
-    console.log(q);
+    q += ' group by Id';
 
-
-
+    return db.query(q);
 }
 
 module.exports = {

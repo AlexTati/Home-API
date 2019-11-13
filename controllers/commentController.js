@@ -1,18 +1,19 @@
-const repo = require("../repositories/optionRepository");
-const option = require("../models/optionModel");
+const repo = require("../repositories/commentRepository");
+const comment = require("../models/commentModel");
 
-const getAll = (req,res) => {
+const insert = (req, res) => {
 
-    repo.getAllOptions().then(([rows, meta]) =>
-    {
-        options = [];
-        rows.forEach(item => options.push(new option(item)));
-        res.json(options);
-    })
-        .catch(err => res.status(400).send(err.message));
+    let newComment = new comment(req.body);
+    if (newComment.isValid()) {
+        repo.insert(newComment).then(([rows, meta]) => {
+            newComment.id = newComment.insertId;
+            res.json(newComment);
+        }).catch(err => res.status(400).send(err.message))
+    } else
+        res.status(400).send('invalid data');
 }
 
 
 module.exports = {
-    getAll: getAll
+    insert: insert
 }

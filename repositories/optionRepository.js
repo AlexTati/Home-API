@@ -10,7 +10,7 @@ const getAllOptions = function()
 
 
 const getOptionForHouse = function (houseId){
-    return db.stmt("select * from HOUSE_OPTIONS_VIEW where House_id = ? ", [houseId]);
+    return db.stmt("select * from HOUSE_OPTIONS_VIEW where House_id = ? order by Name", [houseId]);
 }
 
 module.exports = {

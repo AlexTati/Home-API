@@ -118,7 +118,9 @@ const search = (req, res) => {
 
     houseRepo.search(qHouse).then(([rows, meta]) =>
     {
-        res.json('ok')
+        houses = [];
+        rows.forEach(item => houses.push(new house(item)));
+        res.json(houses);
     });
 }
 

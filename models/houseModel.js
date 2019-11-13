@@ -45,7 +45,7 @@ const house = function (data) {
     if (typeof data.availabilities == "string") {
         JSON.parse(data.availabilities).forEach(item => this.availabilities.push(new availability(item)))
     } else if (data.availabilities !== null && typeof data.availabilities == "object") {
-        data.availabilities = new availability(item);
+        data.availabilities.forEach(item => this.availabilities.push(new availability(item)))
     }
 
 
