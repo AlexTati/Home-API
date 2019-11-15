@@ -7,15 +7,19 @@ const testRoutes = require('../routes/testRoutes');
 const houseTypesRoutes = require ('../routes/typesRoutes');
 const optionRoutes = require ('../routes/optionRoutes.js');
 const availibilityRoutes = require ('../routes/availibilityRoutes.js');
-const commentRoute = require ('../routes/commentRoutes')
+const commentRoute = require ('../routes/commentRoutes');
+const bookingRoute = require ('../routes/bookingRoutes');
+
 
 module.exports = function(app, upload)
 {
     app.use(function(req, res, next) {
         res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        res.header ('Access-Control-Allow-Methods', 'GET, OPTIONS, POST, PUT, DELETE');
         next();
     });
+
 
     userRoutes(app, upload);
     memberRoutes(app, upload);
@@ -26,6 +30,7 @@ module.exports = function(app, upload)
     houseTypesRoutes(app, upload);
     houseTypesRoutes(app, upload);
     commentRoute(app, upload);
+    bookingRoute(app, upload);
     optionRoutes(app, upload);
     availibilityRoutes(app, upload);
 
