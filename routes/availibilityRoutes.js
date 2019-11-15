@@ -10,5 +10,8 @@ module.exports = function (app, upload) {
     app.route('/availibilities')
         .post(upload.none(), availibilityAction.insert)
 
+    app.route('/availibilities/:id')
+        .delete(availibilityAction.deleteAvailibility)
+
 }
 

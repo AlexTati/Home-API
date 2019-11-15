@@ -124,6 +124,27 @@ const search = (req, res) => {
     });
 }
 
+const disable = (req, res) => {
+
+    let id = req.params.id;
+
+    if(isNaN(id))
+    {
+        res.status(400).send("House Id Must Be Numeric");
+    }else{
+        houseRepo.disable(id).then(([rows, meta]) =>
+        {
+            if(rows.affectedRows == 1 )
+                res.json('ok')
+            else
+                res.status(400).send('deletion failed');
+        }).catch(err => res.status(400).send(err.message));
+
+
+    }
+
+}
+
 module.exports = {
     //GET
     getAllHouses: getAllHouses,
@@ -136,4 +157,5 @@ module.exports = {
     getHouseDetailsById: getHouseDetailsById,
 
     search:search,
+    disable:disable
 }

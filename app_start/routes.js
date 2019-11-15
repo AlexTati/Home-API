@@ -9,6 +9,7 @@ const optionRoutes = require ('../routes/optionRoutes.js');
 const availibilityRoutes = require ('../routes/availibilityRoutes.js');
 const commentRoute = require ('../routes/commentRoutes');
 const bookingRoute = require ('../routes/bookingRoutes');
+const cors = require('cors')
 
 
 module.exports = function(app, upload)
@@ -20,6 +21,7 @@ module.exports = function(app, upload)
         next();
     });
 
+    app.use(cors());
 
     userRoutes(app, upload);
     memberRoutes(app, upload);

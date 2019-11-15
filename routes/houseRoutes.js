@@ -10,6 +10,7 @@ module.exports = function(app, upload)
     app.route("/houses/:id")
     .get(houseAction.getHouseById)
     .put(houseAction.updateHouse)
+    .delete(houseAction.disable)
 
     app.route('/members/:id/houses')
         .get(houseAction.getHouseForMember)

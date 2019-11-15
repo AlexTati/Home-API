@@ -35,7 +35,7 @@ const updateHouse = function(house)
 }
 
 const getHouseForMember = function (memberId){
-    return db.stmt("select * from HOUSE_FULL_VIEW where Membre_id = ? ", [memberId]);
+    return db.stmt("select * from HOUSE_FULL_VIEW where Membre_id = ? and Active = 1", [memberId]);
 }
 
 const search = function (house){
@@ -68,6 +68,10 @@ const search = function (house){
     return db.query(q);
 }
 
+const disable = function (houseId){
+    return db.stmt('update HOUSE set Active = 0 where Id = ?', [houseId]);
+}
+
 module.exports = {
     getAllHouses: getAllHouses,
     getHouseById: getHouseById,
@@ -76,5 +80,6 @@ module.exports = {
     updateHouse: updateHouse,
     getHouseForMember: getHouseForMember,
     getFullHouseById:  getFullHouseById,
-    search:search
+    search:search,
+    disable:disable
 }
