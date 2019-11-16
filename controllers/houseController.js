@@ -61,24 +61,29 @@ const updateHouse = (req,res) => {
     let id = req.params.id;
     if(isNaN(id))
     {
-        res.json({"error":"House Id must be Numeric", "message":"Bastard Error!"});
+        res.status(400).send("House Id Must Be Numeric");
     }
     else {
-        req.body.id = id;
-
         let new_house = new house(req.body);
+        console.log(new_house)
+
         if(new_house.isValid())
         {
+            if (req.file !== undefined){
+                new_house.Picture = "http://sam.ovh/assets/" + req.file.filename;
+            }
+
             houseRepo.updateHouse(new_house).then(([rows, meta])=>
             {
                 if(rows.affectedRows == 1 )
-                    res.json({"error":null, "message":"house successfully updated!"});
+
+                    res.json('ok');
                 else{
-                    res.json({"error":"Update Failure", "message":"Nothing has been updated!"});
+                    res.status(400).send('update failed');
                 }
             }).catch(err => res.status(400).send(err.message));
         } else
-            res.json({"error":"Validation Error", "message":"fields cannot be empty"});
+            res.status(400).send('invalid data');
     }
 }
     
@@ -115,13 +120,12 @@ const getHouseForMember = (req,res) => {
 
 const search = (req, res) => {
     qHouse  = new house(JSON.parse(req.body.query));
-
     houseRepo.search(qHouse).then(([rows, meta]) =>
     {
         houses = [];
         rows.forEach(item => houses.push(new house(item)));
         res.json(houses);
-    });
+    }).catch(err => res.status(400).send(err.message));;
 }
 
 const disable = (req, res) => {
@@ -157,5 +161,5 @@ module.exports = {
     getHouseDetailsById: getHouseDetailsById,
 
     search:search,
-    disable:disable
+    disable:disable,
 }

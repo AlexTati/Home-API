@@ -22,15 +22,31 @@ const deleteHouse = function(id){
 
 const insertHouse = function(house){
     console.log(house)
-    return db.stmt("INSERT INTO `HOUSE` (`Title`, `Short_description`, `Long_description`, `Nb_guest`, `Picture`, `Active`, `Insurance_mandatory`, `Street`, `Num`, `Box`, City_id , Membre_id , `House_type_id`, `Lat`, `Lng`) " +
-        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? , ?, ?, ?)",
-        [house.Title, house.Short_description, house.Long_description, house.Nb_guest, house.Picture, house.Active, house.Insurance_mandatory, house.Street, house.Num, house.Box, house.City_id, house.Membre_id, house.House_type_id, house.Lat, house.Lng]);
+    return db.stmt("INSERT INTO `HOUSE` (`Title`, `Short_description`, `Long_description`, `Nb_guest`, `Picture`,   `Street`, `Num`, `Box`, City_id , Membre_id , `House_type_id`, `Lat`, `Lng`) " +
+        "VALUES (?, ?, ?, ?,  ?, ?, ?, ?, ?, ?, ? , ?,  ?)",
+        [house.Title, house.Short_description, house.Long_description, house.Nb_guest, house.Picture,  house.Street, house.Num, house.Box, house.City_id, house.Membre_id, house.House_type_id, house.Lat, house.Lng]);
 }
 
 const updateHouse = function(house)
 {
-    return db.stmt("update HOUSE set Lastname=?, Firstname=?, Email=?, Phone=?, Username=?, Password=?, Home_street=?, Home_num=?, Home_box=?, Home_city_id=? where Id=?",
-        [house.Lastname, house.Firstname, house.Email, house.Phone, house.Username, house.Password, house.Home_street, house.Home_num, house.Home_box, house.Home_city_id]);
+     let q = "update HOUSE set " +
+         "`Title` = ?, `Short_description` = ?, `Long_description` = ?, `Nb_guest` = ?, `Insurance_mandatory`  = ?, " +
+         "`Street` = ?, `Num` = ?, `Box` = ?, City_id  = ?, `House_type_id`  = ?, `Lat`  = ?, `Lng`  = ? ";
+
+     let params = [house.Title, house.Short_description, house.Long_description, house.Nb_guest, house.Insurance_mandatory,
+         house.Street, house.Num, house.Box, house.City_id, house.House_type_id, house.Lat, house.Lng,];
+
+    if (house.Picture){
+        q += " ,Picture = ? ";
+        params.push(house.Picture);
+    }
+
+    params.push( house.Id);
+     q += " where Id = ?";
+
+    console.log(q)
+
+    return db.stmt( q , params );
 
 }
 
@@ -42,15 +58,15 @@ const search = function (house){
 
     q = 'Select * from SEARCH_HOUSE_VIEW s WHERE 1' ;
 
-    if (house.Country_id !== null){
+    if (house.Country_id){
         q += (' AND Country_id = ' + house.Country_id);
     }
 
-    if (house.House_type_id !== null){
+    if (house.House_type_id){
         q += (' AND House_type_id = ' + house.House_type_id);
     }
 
-    if (house.Nb_guest !== null){
+    if (house.Nb_guest){
         q += (' AND Nb_guest >= ' + house.Nb_guest);
     }
 
@@ -69,7 +85,7 @@ const search = function (house){
 }
 
 const disable = function (houseId){
-    return db.stmt('update HOUSE set Active = 0 where Id = ?', [houseId]);
+    return db.stmt('update HOUSE set Active = 0, Deletion_time = CURRENT_DATE() where Id = ?', [houseId]);
 }
 
 module.exports = {

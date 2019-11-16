@@ -1,6 +1,12 @@
 const express = require('express');
-var multer  = require('multer');
-var storage = multer.diskStorage({
+const multer  = require('multer');
+const fs = require('fs');
+const https = require('https');
+const registerRoutes = require('./app_start/routes');
+
+const app = express();
+
+const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, '/var/www/html/assets/')
     },
@@ -8,13 +14,19 @@ var storage = multer.diskStorage({
         cb(null, file.fieldname + '-' + Date.now() + '.png')
     }
 });
-var upload = multer({ storage: storage });
 
-
-const app = express();
-
-const registerRoutes = require('./app_start/routes');
+const upload = multer({ storage: storage });
 
 registerRoutes(app, upload);
 
-app.listen(3000);
+
+
+https.createServer({
+    key: fs.readFileSync('/etc/letsencrypt/live/sam.ovh/privkey.pem'),
+    cert: fs.readFileSync('/etc/letsencrypt/live/sam.ovh/cert.pem')
+}, app).listen(3333);
+
+
+
+
+
