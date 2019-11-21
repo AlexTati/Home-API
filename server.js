@@ -26,6 +26,8 @@ https.createServer({
     cert: fs.readFileSync('/etc/letsencrypt/live/sam.ovh/cert.pem')
 }, app).listen(3333);
 
+app.listen(3000)
+
 
 
 
